@@ -40,7 +40,7 @@ const SignUp=()=>{
     <Header/>
     <main className="container">
         <div id="login-form">
-        {!isForm && <form onSubmit={handleSubmit}>
+        {!isForm &&( <><form onSubmit={handleSubmit}>
             <h2 className="text-success">Create your account</h2>
         <input className="form-control my-3" name="name" type="text" value={user.name} onChange={handleChange}  placeholder="Username" required/>
         <input className="form-control my-3" name="email" type="text" value={user.email} onChange={handleChange}  placeholder="Email Id" required/>
@@ -49,7 +49,8 @@ const SignUp=()=>{
         <input className="form-control my-3" type="password" onChange={event=>setRecheckPassword(event.target.value)} value={recheckPassword} placeholder="Re-check Password" required />
 
         <button className="btn btn-success" type="submit">Sign up</button>
-        </form>}
+        </form>
+        <Link to={"/"}>Back to Login</Link></>)}
         {isForm && (<><h2 className="text-success">You had a successful sign up</h2>
         <Link to="/" className="btn btn-success my-3">Login</Link></>)}
         {user.password.length>0 && recheckPassword.length>0 && user.password!==recheckPassword && <p className="text-danger py-3">Caution: Both passwords must match</p>}

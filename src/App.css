@@ -3,5 +3,33 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 90vh;
+margin-top: 6rem;
+}
+#sidebar{
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+ 
+}
+#navs{
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+
+  margin-top: 1rem;
+  border-radius: 2px;
+}
+#heading-box{
+  margin-top: 2rem;
+  margin-right: 2rem;
+  display: flex;
+  justify-content: space-between;}
+#card-container{
+  display: flex;
+  gap: 2rem;
+  margin-right: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.card{
+  width: 300px;
 }
