@@ -17,7 +17,7 @@ const Teams=()=>{
         } else {
             setIsAuthenticated(true)
             
-            dispatch(fetchTeams({ token: currentToken }))
+            dispatch(fetchTeams({token: currentToken }))
         }},[navigate,isAuthenticated,dispatch])
         const handleLogout=()=>{
             localStorage.removeItem("adminToken")
@@ -36,7 +36,7 @@ const Teams=()=>{
 <div className="col-md-10">
 <div id='heading-box'>
 <h2>Teams</h2>
-<Link className="btn btn-success" to="">+ New Team</Link>
+<Link className="btn btn-success" to="/addteam">+ New Team</Link>
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
 <div>
@@ -50,11 +50,11 @@ const Teams=()=>{
    
 
 
-{teams?.teams?.map(team=>(<div  key={team._id} className="card" >
+{teams?.teams?.map(team=>(<div  key={team?._id} className="card" >
   <div className="card-body">
-    <h5 className="card-title">{team.name} 👥</h5>
+    <h5 className="card-title">{team?.name} 👥</h5>
 <p className="card-text">🧑‍💼🎯🧑‍💼🫂🧑‍💼 </p>
-    <p className="card-text">{team.description}</p>
+    <p className="card-text">{team?.description}</p>
   
   </div>
 </div>))}

@@ -54,11 +54,11 @@ const Projects=()=>{
    
 
 
-{projects?.projects?.map(project=>(<div  key={project._id} className="card" >
+{projects?.projects?.map(project=>(<div  key={project?._id} className="card" >
   <div className="card-body">
-    <h5 className="card-title">{project.name}</h5>
+    <h5 className="card-title">{project?.name}</h5>
 
-    <p className="card-text">{project.description}</p>
+    <p className="card-text">{project?.description}</p>
   
   </div>
 </div>))}

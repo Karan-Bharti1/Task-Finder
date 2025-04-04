@@ -7,27 +7,38 @@ export const getHeaders = (token) => {
     };
     
     if (token) {
-      headers.authorization = `Bearer ${token}`;
+      headers.Authorization = `Bearer ${token}`;
     }
     return headers;
   };
 
 export const fetchProjects=createAsyncThunk("fetchProjects/projects",async({token})=>{
-console.log(token)
+
 const response=await axios.get(`${baseUrl}projects/auth`,{
     headers:getHeaders(token)
 })
 return response.data
 })
 export const addProject=createAsyncThunk("addProject/projects",async({token,postData})=>{
-   
-    console.log(getHeaders(token))
-    const response = await axios.post(`${baseUrl}projects/auth`,postData, {
-        headers: getHeaders(token)
-      })
+   console.log(token)
 
-    return response.data
-})
+  
+      try{
+        console.log(postData)
+        const response = await axios.post(`${baseUrl}projects/auth`,postData, {
+        
+            headers:{'Content-Type':'application/json',
+                'authorization':`Bearer ${token}`}
+          })
+        
+        console.log(response.data)
+        return response.data
+      }catch(error){
+        console.log(error)
+      }
+    })
+
+
 export const projectSlice=createSlice({
     name:"projects",
     initialState:{
