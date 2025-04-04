@@ -9,7 +9,6 @@ const getHeaders = (token) => {
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
-    
     return headers;
   };
 
@@ -21,10 +20,12 @@ const response=await axios.get(`${baseUrl}projects/auth`,{
 return response.data
 })
 export const addProject=createAsyncThunk("addProject/projects",async({token,postData})=>{
-    const response=await axios.post(`${baseUrl}projects/auth`,postData,{
+   
+    console.log(getHeaders(token))
+    const response = await axios.post(`${baseUrl}projects/auth`,postData, {
+        headers: getHeaders(token)
+      })
 
-        headers:getHeaders(token)
-    })
     return response.data
 })
 export const projectSlice=createSlice({
@@ -52,7 +53,9 @@ export const projectSlice=createSlice({
         })
         builder.addCase(addProject.fulfilled,(state,action)=>{
             state.status="succeeded"
+         
             state.projects.push(action.payload)
+            console.log(action.payload,"Karan")
         })
         builder.addCase(addProject.rejected,(state,action)=>{
             state.status="error"

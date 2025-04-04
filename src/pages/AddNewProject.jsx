@@ -32,6 +32,7 @@ const handleChange=event=>{
 }
 const handleSubmit=(event)=>{
 event.preventDefault()
+console.log("Project Data",projectData)
 const currentToken = localStorage.getItem("adminToken")
 
 dispatch(addProject({token:currentToken,postData:projectData})).then(()=>setMessage("Project Added Sucessfully"))
