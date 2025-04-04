@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp.jsx'
 import store from './store.js'
 import Projects from './pages/Projects.jsx'
 import AddNewProject from './pages/AddNewProject.jsx'
+import Teams from './pages/Teams.jsx'
 const router=createBrowserRouter([{
 path:"/",
 element:<App/>
@@ -20,6 +21,9 @@ element:<App/>
 },{
   path:"newproject",
   element:<AddNewProject/>
+},{
+  path:"/teams",
+  element:<Teams/>
 }])
 createRoot(document.getElementById('root')).render(
   <StrictMode>

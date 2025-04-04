@@ -70,7 +70,7 @@ console.log(projects)
 <div id='sidebar'>
 <Link className='bg-success text-light' to={"/projects"} id="navs">Projects</Link>
 
-<Link className='bg-success text-light' id="navs">Teams</Link>
+<Link className='bg-success text-light' to={"/teams"} id="navs">Teams</Link>
 <Link className='bg-success text-light'id="navs">Reports</Link>
 <Link className='bg-success text-light' id='navs'>Settings</Link>
 </div>

@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { baseUrl } from "../url";
 import axios from "axios";
-const getHeaders = (token) => {
+export const getHeaders = (token) => {
     const headers = {
       'Content-Type': 'application/json'
     };
     
     if (token) {
-      headers.Authorization = `Bearer ${token}`;
+      headers.authorization = `Bearer ${token}`;
     }
     return headers;
   };
 
 export const fetchProjects=createAsyncThunk("fetchProjects/projects",async({token})=>{
-
+console.log(token)
 const response=await axios.get(`${baseUrl}projects/auth`,{
     headers:getHeaders(token)
 })
