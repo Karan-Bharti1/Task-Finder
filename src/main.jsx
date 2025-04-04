@@ -7,6 +7,7 @@ import {Provider} from 'react-redux'
 import SignUp from './pages/Signup.jsx'
 import store from './store.js'
 import Projects from './pages/Projects.jsx'
+import AddNewProject from './pages/AddNewProject.jsx'
 const router=createBrowserRouter([{
 path:"/",
 element:<App/>
@@ -16,6 +17,9 @@ element:<App/>
 },{
   path:"/projects",
   element:<Projects/>
+},{
+  path:"newproject",
+  element:<AddNewProject/>
 }])
 createRoot(document.getElementById('root')).render(
   <StrictMode>

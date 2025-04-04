@@ -1,18 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { baseUrl } from "../url";
 import axios from "axios";
-const headers={
-    'Content-Type':'application/json'
-}
-export const fetchProjects=createAsyncThunk("fetchProjects/projects",async({token})=>{
+const getHeaders = (token) => {
+    const headers = {
+      'Content-Type': 'application/json'
+    };
     
-if(token){
-    headers.Authorization=`Bearer ${token}`
-}
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    
+    return headers;
+  };
+
+export const fetchProjects=createAsyncThunk("fetchProjects/projects",async({token})=>{
+
 const response=await axios.get(`${baseUrl}projects/auth`,{
-    headers:headers
+    headers:getHeaders(token)
 })
 return response.data
+})
+export const addProject=createAsyncThunk("addProject/projects",async({token,postData})=>{
+    const response=await axios.post(`${baseUrl}projects/auth`,postData,{
+
+        headers:getHeaders(token)
+    })
+    return response.data
 })
 export const projectSlice=createSlice({
     name:"projects",
@@ -31,6 +44,17 @@ export const projectSlice=createSlice({
             state.projects=action.payload
         })
         builder.addCase(fetchProjects.rejected,(state,action)=>{
+            state.status="error"
+            state.error=action.payload
+        })
+        builder.addCase(addProject.pending,(state)=>{
+            state.status="loading"
+        })
+        builder.addCase(addProject.fulfilled,(state,action)=>{
+            state.status="succeeded"
+            state.projects.push(action.payload)
+        })
+        builder.addCase(addProject.rejected,(state,action)=>{
             state.status="error"
             state.error=action.payload
         })

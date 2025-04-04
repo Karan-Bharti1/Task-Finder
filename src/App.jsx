@@ -40,6 +40,7 @@ const handleLogout=()=>{
 }
 useEffect(() => {
   const currentToken = localStorage.getItem("adminToken")
+  console.log(currentToken)
   if (currentToken) {
     dispatch(fetchProjects({token: currentToken}))  
   }
@@ -62,11 +63,13 @@ console.log(projects)
 </div>
 {
   token && <>
+  
   <div className='row'>
 <div className='col-md-2 bg-white-50' id='sidebar-block'>
 
 <div id='sidebar'>
 <Link className='bg-success text-light' to={"/projects"} id="navs">Projects</Link>
+
 <Link className='bg-success text-light' id="navs">Teams</Link>
 <Link className='bg-success text-light'id="navs">Reports</Link>
 <Link className='bg-success text-light' id='navs'>Settings</Link>
@@ -79,12 +82,18 @@ console.log(projects)
 </div>
 <div>
   <h3>Projects</h3>
+  {projects.status==="loading" && (<>
+    <div className="text-center">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div></>)}
   <div id='card-container'>
-{projects?.projects?.map(project=>(<div class="card" >
-  <div class="card-body">
-    <h5 class="card-title" key={project._id}>{project.name}</h5>
+{projects?.projects?.map(project=>(<div key={project._id} className="card" >
+  <div  className="card-body">
+    <h5 className="card-title" >{project.name}</h5>
 
-    <p class="card-text">{project.description}</p>
+    <p className="card-text">{project.description}</p>
   
   </div>
 </div>))}

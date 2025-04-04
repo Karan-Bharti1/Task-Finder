@@ -11,20 +11,22 @@ const Projects=()=>{
     const projects=useSelector(state=>state.projects)
     useEffect(()=>{
         const currentToken=localStorage.getItem("adminToken")
-        if(!currentToken){
+        if (!currentToken) {
             setIsAuthenticated(false)
             navigate("/")
-        }
-        if(currentToken){
-            fetchProjects({token:currentToken})
+        } else {
+            setIsAuthenticated(true)
+            
+            dispatch(fetchProjects({ token: currentToken }))
         }
         
-        console.log(currentToken)
-    },[dispatch,isAuthenticated])
+     
+    },[dispatch,isAuthenticated,navigate])
     const handleLogout=()=>{
         localStorage.removeItem("adminToken")
         setIsAuthenticated(false)
       }
+      
     return(<>
     <Header/>
     <main>
@@ -38,16 +40,25 @@ const Projects=()=>{
 <div className="col-md-10">
 <div id='heading-box'>
 <h2>Projects</h2>
-<Link className="btn btn-success">+ New Project</Link>
+<Link className="btn btn-success" to="/newproject">+ New Project</Link>
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
 <div>
+{projects?.status==="loading" && (<>
+    <div className="text-center mt-4">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div></>)}
     <div id='card-container'>
-{projects?.projects?.map(project=>(<div class="card" >
-  <div class="card-body">
-    <h5 class="card-title" key={project._id}>{project.name}</h5>
+   
 
-    <p class="card-text">{project.description}</p>
+
+{projects?.projects?.map(project=>(<div  key={project._id} className="card" >
+  <div className="card-body">
+    <h5 className="card-title">{project.name}</h5>
+
+    <p className="card-text">{project.description}</p>
   
   </div>
 </div>))}
