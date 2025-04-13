@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { addProject } from "../features/projectSlice"
 import { useDispatch } from "react-redux"
+
 const AddNewProject=()=>{
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
    

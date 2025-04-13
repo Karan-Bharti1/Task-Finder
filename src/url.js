@@ -1,2 +1,2 @@
-export const userUrl="https://task-finder-backend.vercel.app/signup"
-export const baseUrl="https://task-finder-backend.vercel.app/"
+export const userUrl="https://tfb-karan-bhartis-projects.vercel.app/signup"
+export const baseUrl="https://tfb-karan-bhartis-projects.vercel.app/"

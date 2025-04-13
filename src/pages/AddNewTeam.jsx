@@ -35,11 +35,14 @@ const handleSubmit=(event)=>{
 event.preventDefault()
 console.log("Teams Data",teamsData)
 const currentToken = localStorage.getItem("adminToken")
-console.log(currentToken,teamsData)
-dispatch(addTeams({token:currentToken,postData:teamsData})).then(()=>setMessage("Teams Added Sucessfully"))
-setTimeout(()=>{
-    setMessage("")
-},1500)
+
+dispatch(addTeams({token:currentToken,postData:teamsData})).then(()=>{setMessage("Teams Added Sucessfully")
+
+    setTimeout(()=>{
+        setMessage("")
+    },1500)
+})
+
 setTeamsData({
     name:"",
         description:""

@@ -72,7 +72,7 @@ console.log(projects)
 
 <Link className='bg-success text-light' to={"/teams"} id="navs">Teams</Link>
 <Link className='bg-success text-light'id="navs">Reports</Link>
-<Link className='bg-success text-light' id='navs'>Settings</Link>
+<Link className='bg-success text-light' id='navs' to={"/tasks"}>Tasks</Link>
 </div>
 </div>
 <div className='col-md-10' id='content-box'>
@@ -91,7 +91,7 @@ console.log(projects)
   <div id='card-container'>
 {projects?.projects?.map(project=>(<div key={project?._id} className="card" >
   <div  className="card-body">
-    <h5 className="card-title" >{project?.name}</h5>
+  <Link  state={{name:project?.name,description:project?.description}} to={`/viewproject/${project?._id}`}>{project?.name}</Link>
 
     <p className="card-text">{project?.description}</p>
   
