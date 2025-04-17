@@ -10,9 +10,15 @@ const response=await axios.get(`${baseUrl}teams/auth`,{
 return response.data
 })
  export const addTeams=createAsyncThunk("addTeams/teams",async({token,postData})=>{
+    // const headers=getHeaders(token)
+const headers={
+    'Content-Type':'application/json',
+    'authorization':`Bearer ${token}`
+}
     try {
+        console.log(token,postData)
         const response=await axios.post(`${baseUrl}teams/auth`,postData,{
-            headers:getHeaders(token)
+            headers:headers
         })
         return response.data
     } catch (error) {

@@ -13,6 +13,7 @@ const [user,setUser]=useState({
 
 const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
 const dispatch=useDispatch()
+const [proj,setProj]=useState()
 const projects=useSelector(state=>state.projects)
 const handlechange=(event)=>{
 const {name,value}=event.target
@@ -34,18 +35,36 @@ localStorage.setItem("adminToken",data.token)
 setIsAuthenticated(true)
 }
 const token=localStorage.getItem("adminToken")
+console.log(token)
 const handleLogout=()=>{
   localStorage.removeItem("adminToken")
   setIsAuthenticated(false)
 }
 useEffect(() => {
   const currentToken = localStorage.getItem("adminToken")
-  console.log(currentToken)
+
   if (currentToken) {
     dispatch(fetchProjects({token: currentToken}))  
   }
 }, [dispatch, isAuthenticated])
-console.log(projects)
+
+const fetchProj=async()=>{
+  const currentToken = localStorage.getItem("adminToken")
+  const response=await fetch(`${baseUrl}projects/auth`,{
+    headers:{
+      'Content-Type':'application/json',
+      'authorization':`Bearer ${currentToken}`
+    } })
+    const data=await response.json()
+    if(response.ok){
+      setProj(data)
+    }
+ 
+    }
+    useEffect(()=>{
+      fetchProj().then(()=>console.log(proj))
+
+    },[])
   return (
     <>
 <Header/>

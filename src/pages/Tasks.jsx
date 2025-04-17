@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { Link } from "react-router-dom"
 import { fetchTasks } from "../features/taskSlice"
+import { current } from "@reduxjs/toolkit"
 const Tasks=()=>{
     {
         const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
@@ -19,11 +20,12 @@ const Tasks=()=>{
     const tasks=useSelector(state=>state.tasks)
     useEffect(()=>{
     const curentToken=localStorage.getItem("adminToken")
+ console.log(curentToken)
     if(!curentToken){
         setIsAuthenticated(false)
         navigate("/")
     }else{
-       dispatch( fetchTasks({token:curentToken}))
+       dispatch(fetchTasks({token:curentToken}))
     }
     },[isAuthenticated,navigate,dispatch])
     console.log(tasks)

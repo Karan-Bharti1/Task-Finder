@@ -10,10 +10,12 @@ export const fetchTasksForProject=createAsyncThunk("fetchtaskProject/tasks",asyn
     return response.data
 })
 export const fetchTasks=createAsyncThunk("fetchTasks/tasks",async({token})=>{
+    console.log(token)
+    console.log(getHeaders(token))
     const response=await axios.get(`${baseUrl}tasks/auth`,{
         headers:getHeaders(token)
     })
- 
+ console.log(response.data)
     return response.data
 })
 export const taskSlice=createSlice({
@@ -30,7 +32,7 @@ builder.addCase(fetchTasksForProject.pending,state=>{
 })
 builder.addCase(fetchTasksForProject.fulfilled,(state,action)=>{
     state.status="succeeded",
-    state.status=action.payload
+    state.tasks=action.payload
 })
 builder.addCase(fetchTasksForProject.rejected,(state,action)=>{
     state.status="error",
@@ -41,7 +43,7 @@ builder.addCase(fetchTasks.pending,state=>{
 })
 builder.addCase(fetchTasks.fulfilled,(state,action)=>{
     state.status="succeeded",
-    state.status=action.payload
+    state.tasks=action.payload
 })
 builder.addCase(fetchTasks.rejected,(state,action)=>{
     state.status="error",
@@ -49,3 +51,4 @@ builder.addCase(fetchTasks.rejected,(state,action)=>{
 })
 }
 })
+export default taskSlice.reducer

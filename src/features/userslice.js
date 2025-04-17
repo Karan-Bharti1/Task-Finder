@@ -41,7 +41,11 @@ export const userSlice=createSlice({
         })
         builder.addCase(signUpUser.fulfilled,(state,action)=>{
             state.status="succeeded"
-            state.user.push(action.payload)
+            if (Array.isArray(state.user)) {
+                state.user.push(action.payload);
+            } else {
+                state.user = [action.payload];
+            }
             
         })
         builder.addCase(signUpUser.rejected,(state,action)=>{
