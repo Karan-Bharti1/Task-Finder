@@ -28,7 +28,8 @@ export const userSlice=createSlice({
         })
         builder.addCase(fetchUsers.fulfilled,(state,action)=>{
             state.status="succeeded"
-            state.user=action.payload
+            console.log(action.payload)
+            state.user=action.payload.emailIds
             
         })
         builder.addCase(fetchUsers.rejected,(state,action)=>{
@@ -41,11 +42,9 @@ export const userSlice=createSlice({
         })
         builder.addCase(signUpUser.fulfilled,(state,action)=>{
             state.status="succeeded"
-            if (Array.isArray(state.user)) {
+           
                 state.user.push(action.payload);
-            } else {
-                state.user = [action.payload];
-            }
+            
             
         })
         builder.addCase(signUpUser.rejected,(state,action)=>{
