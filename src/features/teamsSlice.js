@@ -6,7 +6,7 @@ export const fetchTeams=createAsyncThunk("fetchTeams/teams",async(token)=>{
     console.log(token)
 const headers={
     'Content-Type':'application/json',
-    'Authorization':`${token}`
+    'Authorization':token
 }
 console.log(headers)
 const response=await axios.get(`${baseUrl}teams/auth`,{
@@ -18,7 +18,7 @@ return response.data
     // const headers=getHeaders(token)
 const headers={
     'Content-Type':'application/json',
-    'Authorization':`Bearer ${token}`
+    'Authorization':token
 }
     try {
         console.log(token,postData)
