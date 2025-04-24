@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getHeaders } from "./projectSlice";
 import axios from "axios";
 import { baseUrl } from "../url";
-export const fetchTeams=createAsyncThunk("fetchTeams/teams",async(token)=>{
+export const fetchTeams=createAsyncThunk("fetchTeams/teams",async({token})=>{
     console.log(token)
 const headers={
     'Content-Type':'application/json',
-    'Authorization':token
+ 'Authorization':`Bearer ${token}`
 }
-console.log(headers)
+
 const response=await axios.get(`${baseUrl}teams/auth`,{
     headers:headers
 })
@@ -18,7 +18,7 @@ return response.data
     // const headers=getHeaders(token)
 const headers={
     'Content-Type':'application/json',
-    'Authorization':token
+    'Authorization':`Bearer ${token}`
 }
     try {
         console.log(token,postData)
@@ -55,7 +55,7 @@ export const teamSlice=createSlice({
         })
         builder.addCase(addTeams.fulfilled,(state,action)=>{
             state.status="succeeded"
-            state.teams=action.payload
+            state.teams.push(action.payload)
         })
         builder.addCase(addTeams.rejected,(state,action)=>{
             state.status="error"

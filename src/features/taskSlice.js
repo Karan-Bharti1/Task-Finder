@@ -9,13 +9,19 @@ export const fetchTasksForProject=createAsyncThunk("fetchtaskProject/tasks",asyn
     console.log(response.data)
     return response.data
 })
-export const fetchTasks=createAsyncThunk("fetchTasks/tasks",async({token})=>{
+export const fetchTasks=createAsyncThunk("fetchTasks/tasks",async({token,key,value,key1,value1,key2,value2,key3,value3,key4,value4})=>{
     console.log(token)
     console.log(getHeaders(token))
-    const response=await axios.get(`${baseUrl}tasks/auth`,{
+    const response=await axios.get(`${baseUrl}tasks/auth?${key}=${value}&${key1}=${value1}&${key2}=${value2}&${key3}=${value3}&${key4}=${value4}`,{
         headers:getHeaders(token)
     })
- console.log(response.data)
+
+    return response.data
+})
+export const addTasks=createAsyncThunk("addTasks/tasks",async({token,postData})=>{
+    const response=await axios.post(`${baseUrl}tasks/auth`,postData,{
+        headers:getHeaders(token)
+    })
     return response.data
 })
 export const taskSlice=createSlice({
@@ -49,6 +55,17 @@ builder.addCase(fetchTasks.rejected,(state,action)=>{
     state.status="error",
     state.error=action.payload
 })
+builder.addCase(addTasks.pending,state=>{
+              state.status="loading"
+        })
+        builder.addCase(addTasks.fulfilled,(state,action)=>{
+            state.status="succeeded"
+            state.tasks.push(action.payload)
+        })
+        builder.addCase(addTasks.rejected,(state,action)=>{
+            state.status="error"
+            state.error=action.payload
+        })
 }
 })
 export default taskSlice.reducer

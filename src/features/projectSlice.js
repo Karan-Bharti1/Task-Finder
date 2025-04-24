@@ -7,7 +7,7 @@ export const getHeaders = (token) => {
     };
     
     if (token) {
-      headers.Authorization = token;
+      headers.Authorization = `Bearer ${token}`;
     }
     return headers;
   };
@@ -16,10 +16,10 @@ export const fetchProjects=createAsyncThunk("fetchProjects/projects",async({toke
 
 const response=await axios.get(`${baseUrl}projects/auth`,{ headers: {
     'Content-Type': 'application/json',
-    'Authorization':token
+    'Authorization':`Bearer ${token}`
   }}
 )
-console.log(response)
+
 return response.data
 })
 export const addProject=createAsyncThunk("addProjects/projects",async({token,postData})=>{
@@ -30,7 +30,8 @@ export const addProject=createAsyncThunk("addProjects/projects",async({token,pos
         const response = await axios.post(`${baseUrl}projects/auth`,postData, {
         
             headers:{'Content-Type':'application/json',
-                'Authorization': token}
+                 'Authorization':`Bearer ${token}`
+              }
           })
         
         console.log(response.data)

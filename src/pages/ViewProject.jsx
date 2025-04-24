@@ -42,10 +42,13 @@ console.log(tasks)
 
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
-<div>
+<div className="me-4">
     <h2 className="text-success">{name}</h2>
     <p className="fs-4">{description}</p>
     <h3>Tasks Assigned</h3>
+    <ul className="list-group">
+    {tasks?.tasks?.map(task=>(<li key={task?._id} className="list-group-item"><div>🎯 {task?.name}{task?.team?.name}</div></li>))}
+    </ul>
 </div>
 </div>
 

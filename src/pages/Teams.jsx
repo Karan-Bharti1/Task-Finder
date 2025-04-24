@@ -47,9 +47,6 @@ const Teams=()=>{
   </div>
 </div></>)}
     <div id='card-container'>
-   
-
-
 {teams?.teams?.map(team=>(<div  key={team?._id} className="card" >
   <div className="card-body">
     <h5 className="card-title">{team?.name} 👥</h5>
