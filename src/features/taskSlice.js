@@ -18,6 +18,10 @@ export const fetchTasks=createAsyncThunk("fetchTasks/tasks",async({token,key,val
 
     return response.data
 })
+export const editTasks=createAsyncThunk("edittasks/tasks",async({token,id,task})=>{
+    const response=await axios.put(`${baseUrl}tasks/auth/${id}`,task,{headers:getHeaders(token)})
+    return response.data
+})
 export const addTasks=createAsyncThunk("addTasks/tasks",async({token,postData})=>{
     const response=await axios.post(`${baseUrl}tasks/auth`,postData,{
         headers:getHeaders(token)
@@ -63,6 +67,22 @@ builder.addCase(addTasks.pending,state=>{
             state.tasks.push(action.payload)
         })
         builder.addCase(addTasks.rejected,(state,action)=>{
+            state.status="error"
+            state.error=action.payload
+        })
+        builder.addCase(editTasks.pending,state=>{
+            state.status="loading"
+        })
+        builder.addCase(editTasks.fulfilled,(state,action)=>{
+            state.status="succeeded"
+            const index=state.tasks.findIndex(task=>task._id===action.payload._id)
+            console.log("Before Update:", state.tasks[index]);
+            if(index!=-1){
+        state.tasks[index]=action.payload
+            }   
+            console.log("After Update:", state.tasks[index]);
+        })
+        builder.addCase(editTasks.rejected,(state,action)=>{
             state.status="error"
             state.error=action.payload
         })

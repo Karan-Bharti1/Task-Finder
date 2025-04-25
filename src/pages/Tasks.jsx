@@ -72,18 +72,21 @@ const Tasks=()=>{
     <Link className="btn btn-success" to={"/addtask"}>+ New Task</Link>
     <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
     </div>
-  <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/>
-    <div className="me-3">
     {tasks?.status=="loading" && (<>
     <div className="text-center mt-4">
   <div className="spinner-border" role="status">
     <span className="visually-hidden">Loading...</span>
   </div>
 </div></>)}
+ {tasks.status!="loading" &&   <div>
+  <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/>
+    <div className="me-3">
+   
         <ul className="list-group mt-3">
-    {tasks?.tasks?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯{task.name}</p><p >~{task?.team?.name}</p></div></li>))}
+    {tasks?.tasks?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
     </ul>
     </div>
+    </div>}
     </div>
     
         </div>

@@ -3,6 +3,12 @@ import Header from "../components/Header";
 import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasksForProject } from "../features/taskSlice";
+import Filters from "../components/Filters";
+import { fetchProjects } from "../features/projectSlice";
+import { fetchTags } from "../features/tagsSlice";
+import { fetchAllUsers } from "../features/userslice";
+import { fetchTeams } from "../features/teamsSlice";
+fetchTeams
 const ViewProject=()=>{
     const {projectId}=useParams()
     console.log(projectId)
@@ -23,6 +29,11 @@ if(!curentToken){
     navigate("/")
 }else{
     dispatch(fetchTasksForProject({token:curentToken,id:projectId}))
+          
+           dispatch(fetchProjects({token:curentToken}))
+           dispatch(fetchAllUsers({token:curentToken}))
+           dispatch(fetchTeams({token:curentToken}))
+           dispatch(fetchTags({token:curentToken}))
 }
 },[isAuthenticated,navigate,projectId,dispatch])
 console.log(tasks)
@@ -47,6 +58,7 @@ console.log(tasks)
     <p className="fs-4">{description}</p>
     <h3>Tasks Assigned</h3>
     <ul className="list-group">
+    {/* <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/> */}
     {tasks?.tasks?.map(task=>(<li key={task?._id} className="list-group-item"><div>🎯 {task?.name}{task?.team?.name}</div></li>))}
     </ul>
 </div>

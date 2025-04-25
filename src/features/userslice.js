@@ -63,7 +63,7 @@ export const userSlice=createSlice({
         })
         builder.addCase(fetchAllUsers.fulfilled,(state,action)=>{
             state.status="succeeded"
-            console.log(action.payload)
+           
             state.user=action.payload
             
         })

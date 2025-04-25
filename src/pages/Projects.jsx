@@ -54,8 +54,6 @@ const Projects=()=>{
 </div></>)}
     <div id='card-container'>
    
-
-
 {projects?.projects?.map(project=>(<div  key={project?._id} className="card" >
   <div className="card-body">
     <Link  state={{name:project.name,description:project.description}} to={`/viewproject/${project?._id}`}>{project?.name}</Link>
