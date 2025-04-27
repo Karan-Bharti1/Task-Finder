@@ -49,7 +49,7 @@ const Teams=()=>{
     <div id='card-container'>
 {teams?.teams?.map(team=>(<div  key={team?._id} className="card" >
   <div className="card-body">
-    <h5 className="card-title">{team?.name} 👥</h5>
+    <h5 className="card-title"><Link to={`/viewteam/${team._id}`} state={{id:team._id,name:team.name,description:team.description}}>{team?.name} 👥</Link></h5>
 <p className="card-text">🧑‍💼🎯🧑‍💼🫂🧑‍💼 </p>
     <p className="card-text">{team?.description}</p>
   

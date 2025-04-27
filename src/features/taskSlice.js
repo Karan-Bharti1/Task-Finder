@@ -9,6 +9,13 @@ export const fetchTasksForProject=createAsyncThunk("fetchtaskProject/tasks",asyn
     console.log(response.data)
     return response.data
 })
+export const fetchTasksForTeams=createAsyncThunk("fetchtaskTeams/tasks",async({token,id})=>{
+    const response=await axios.get(`${baseUrl}tasks/teams/auth/${id}`,{
+        headers:getHeaders(token)
+    })
+    console.log(response.data)
+    return response.data
+})
 export const fetchTasks=createAsyncThunk("fetchTasks/tasks",async({token,key,value,key1,value1,key2,value2,key3,value3,key4,value4})=>{
     console.log(token)
     console.log(getHeaders(token))
@@ -45,6 +52,17 @@ builder.addCase(fetchTasksForProject.fulfilled,(state,action)=>{
     state.tasks=action.payload
 })
 builder.addCase(fetchTasksForProject.rejected,(state,action)=>{
+    state.status="error",
+    state.error=action.payload
+})
+builder.addCase(fetchTasksForTeams.pending,state=>{
+    state.status="loading"
+})
+builder.addCase(fetchTasksForTeams.fulfilled,(state,action)=>{
+    state.status="succeeded",
+    state.tasks=action.payload
+})
+builder.addCase(fetchTasksForTeams.rejected,(state,action)=>{
     state.status="error",
     state.error=action.payload
 })

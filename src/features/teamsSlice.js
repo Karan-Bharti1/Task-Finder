@@ -30,6 +30,7 @@ const headers={
         console.log(error)
     }
 })
+
 export const teamSlice=createSlice({
     name:"teams",
     initialState:{

@@ -16,6 +16,7 @@ import AddTask from './pages/AddTask.jsx'
 import ViewTaskDetails from './pages/ViewTaskDetails.jsx'
 import EditDetails from './pages/EditDetails.jsx'
 import Reports from './pages/Reports.jsx'
+import ViewTeams from './pages/ViewTeams.jsx'
 const router=createBrowserRouter([{
 path:"/",
 element:<App/>
@@ -52,6 +53,9 @@ element:<App/>
 },{
   path:"/reports",
   element:<Reports/>
+},{
+  path:"/viewteam/:id",
+  element:<ViewTeams/>
 }])
 createRoot(document.getElementById('root')).render(
   <StrictMode>
