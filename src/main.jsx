@@ -15,6 +15,7 @@ import Tasks from './pages/Tasks.jsx'
 import AddTask from './pages/AddTask.jsx'
 import ViewTaskDetails from './pages/ViewTaskDetails.jsx'
 import EditDetails from './pages/EditDetails.jsx'
+import Reports from './pages/Reports.jsx'
 const router=createBrowserRouter([{
 path:"/",
 element:<App/>
@@ -48,6 +49,9 @@ element:<App/>
 },{
   path:"/edittask/:id",
   element:<EditDetails/>
+},{
+  path:"/reports",
+  element:<Reports/>
 }])
 createRoot(document.getElementById('root')).render(
   <StrictMode>

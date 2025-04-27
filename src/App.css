@@ -44,3 +44,19 @@ justify-content: space-between;
   display: flex;
 gap: 2rem;
 }
+.chartContainer{
+  width: 400px;
+  height: 400px;
+}
+.chartDataContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.dataContainer{
+  align-self: center;
+}
+.chartContainer2{
+  height: 200px;
+  width: 400px;
+}

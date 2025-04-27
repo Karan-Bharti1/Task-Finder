@@ -6,9 +6,18 @@ import { useEffect, useState } from 'react'
 import { baseUrl } from './url'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProjects } from './features/projectSlice'
+import { fetchTasks } from './features/taskSlice'
 function App() {
 const [user,setUser]=useState({
   email:"",password:""
+})
+const [filters,setFilters]=useState({
+  status:"",
+  tag:"",
+  owner:"",
+  team:"",
+  project:""
+
 })
 
 const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
@@ -45,26 +54,13 @@ useEffect(() => {
 
   if (currentToken) {
     dispatch(fetchProjects({token: currentToken}))  
+    dispatch(fetchTasks({token:currentToken,key:"status",value:filters.status,key1:"tag",value1:filters.tag,key2:"owner",value2:filters.owner,key3:"project",value3:filters.project,key4:"team",value4:filters.team}))
   }
 }, [dispatch, isAuthenticated])
 
-const fetchProj=async()=>{
-  const currentToken = localStorage.getItem("adminToken")
-  const response=await fetch(`${baseUrl}projects/auth`,{
-    headers:{
-      'Content-Type':'application/json',
-      'authorization':`Bearer ${currentToken}`
-    } })
-    const data=await response.json()
-    if(response.ok){
-      setProj(data)
-    }
- 
-    }
-    useEffect(()=>{
-      fetchProj().then(()=>console.log(proj))
+    
+    const tasks=useSelector(state=>state.tasks)
 
-    },[])
   return (
     <>
 <Header/>
@@ -90,7 +86,7 @@ const fetchProj=async()=>{
 <Link className='bg-success text-light' to={"/projects"} id="navs">Projects</Link>
 
 <Link className='bg-success text-light' to={"/teams"} id="navs">Teams</Link>
-<Link className='bg-success text-light'id="navs">Reports</Link>
+<Link className='bg-success text-light' to="/reports" id="navs">Reports</Link>
 <Link className='bg-success text-light' id='navs' to={"/tasks"}>Tasks</Link>
 </div>
 </div>
@@ -116,10 +112,14 @@ const fetchProj=async()=>{
   
   </div>
 </div>))}
+
 </div>
 </div>
-
-
+<br/>
+<h3>Tasks</h3>
+<ul className="list-group my-3 me-3">
+{tasks?.tasks?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
+</ul>
 
 </div>
 

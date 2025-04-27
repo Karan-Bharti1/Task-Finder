@@ -1,7 +1,7 @@
 const Filters=({handleFilterChange,filters,teams,projectsData,tagsData,ownersData})=>{
     return(<>
       <div className="my-3">Filter By:{" "}
-    <select  name="status" id="status" onChange={handleFilterChange}>
+    <select  name="status" value={filters.status} id="status" onChange={handleFilterChange}>
     <option value="">---Status---</option>
     <option value="To Do">To Do</option>
     <option value="In Progress">In Progress</option>

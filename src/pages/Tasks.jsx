@@ -11,11 +11,12 @@ import { fetchAllUsers } from "../features/userslice"
 import { fetchTeams } from "../features/teamsSlice"
 import { fetchTags } from "../features/tagsSlice"
 import Filters from "../components/Filters"
+
 const Tasks=()=>{
-    
+  const [sortData,setSortData]=useState("")
         const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
         const token=localStorage.getItem("adminToken")
-        const [tasksData,setTasksData]=useState([])
+
         const navigate=useNavigate()
     const handleLogout=()=>{
       localStorage.removeItem("adminToken")
@@ -30,6 +31,7 @@ const Tasks=()=>{
         project:""
 
     })
+
     const handleFilterChange=e=>{
         const {name,value}=e.target
         const token=localStorage.getItem("adminToken")
@@ -56,6 +58,20 @@ const Tasks=()=>{
        dispatch(fetchTags({token:curentToken}))
     }
     },[isAuthenticated,navigate,dispatch])
+    const handleSortChange=(e)=>{
+setSortData(e.target.value)
+    }
+    const getSortedTasks = () => {
+      if (!tasks?.tasks) return [];
+      
+      if (sortData === "LowToHigh") {
+        return [...tasks.tasks].sort((a, b) => a.timeToComplete - b.timeToComplete);
+      } else if (setSortData === "HighToLow") {
+        return [...tasks.tasks].sort((a, b) => b.timeToComplete - a.timeToComplete);
+      }
+      
+      return tasks.tasks;
+    };
     console.log(tasks)
         return(<>
         <Header/>
@@ -80,10 +96,17 @@ const Tasks=()=>{
 </div></>)}
  {tasks.status!="loading" &&   <div>
   <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/>
+   <label>Sort By:</label>
+   {" "}
+   <select value={sortData} onChange={handleSortChange}>
+    <option value="">---Time To Complete--</option>
+    <option value="LowToHigh">Low To High</option>
+    <option value="HighToLow">High To Low</option>
+   </select>
     <div className="me-3">
    
         <ul className="list-group mt-3">
-    {tasks?.tasks?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
+    {getSortedTasks()?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
     </ul>
     </div>
     </div>}

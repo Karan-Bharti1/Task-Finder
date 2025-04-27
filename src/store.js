@@ -4,11 +4,13 @@ import {projectSlice} from "./features/projectSlice";
 import { teamSlice } from "./features/teamsSlice";
 import { taskSlice } from "./features/taskSlice";
 import { tagSlice } from "./features/tagsSlice";
+import { reportsSlice } from "./features/reportsSlice";
 
 export default configureStore({reducer:{
     user:userSlice.reducer,
     projects:projectSlice.reducer,
     teams:teamSlice.reducer,
     tasks:taskSlice.reducer,
-    tags:tagSlice.reducer
+    tags:tagSlice.reducer,
+    reports:reportsSlice.reducer
 }})

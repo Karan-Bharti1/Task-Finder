@@ -18,10 +18,15 @@ const ViewProject=()=>{
     const navigate=useNavigate()
     const{name,description}=useLocation()?.state||{}
     const tasks=useSelector(state=>state.tasks)
+    const tags=useSelector(state=>state.tags)
+    const ownersData=useSelector(state=>state.user)
+    const [tagFilter,setTagFilter]=useState("")
+    const [ownerFilter,setOwnerFilter]=useState("")
 const handleLogout=()=>{
   localStorage.removeItem("adminToken")
   setIsAuthenticated(false)
 }
+
 useEffect(()=>{
 const curentToken=localStorage.getItem("adminToken")
 if(!curentToken){
@@ -34,9 +39,18 @@ if(!curentToken){
            dispatch(fetchAllUsers({token:curentToken}))
            dispatch(fetchTeams({token:curentToken}))
            dispatch(fetchTags({token:curentToken}))
+         
 }
 },[isAuthenticated,navigate,projectId,dispatch])
 console.log(tasks)
+console.log(ownerFilter)
+console.log(tagFilter)
+const filteredTasks = tasks?.tasks?.filter(task => {
+    const matchOwner = ownerFilter ? task.owners?.some(owner => owner === ownerFilter) : true;
+    const matchTag = tagFilter ? task.tags?.some(tag => tag=== tagFilter) : true;
+    return matchOwner && matchTag;
+  });
+  
     return(<>
     <Header/>
     <main>
@@ -57,9 +71,22 @@ console.log(tasks)
     <h2 className="text-success">{name}</h2>
     <p className="fs-4">{description}</p>
     <h3>Tasks Assigned</h3>
+    <div className="my-3">
+<label>Filters By:</label>
+{" "}
+<select  name="owner" value={ownerFilter} onChange={(e)=>setOwnerFilter(e.target.value)}>
+    <option value="">---Owners---</option>
+ {ownersData?.user?.map(tag=>(<option key={tag?._id} value={tag?._id}>{tag?.name}</option>))}
+ </select>
+{" "}
+<select  name="tag" value={tagFilter} onChange={(e)=>setTagFilter(e.target.value)}>
+    <option value="">---Tags---</option>
+ {tags?.tags?.map(tag=>(<option key={tag?._id} value={tag?._id}>{tag?.name}</option>))}
+ </select>
+</div>
     <ul className="list-group">
-    {/* <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/> */}
-    {tasks?.tasks?.map(task=>(<li key={task?._id} className="list-group-item"><div>🎯 {task?.name}{task?.team?.name}</div></li>))}
+     
+    {filteredTasks?.map(task=>(<li key={task?._id} className="list-group-item"><div>🎯 {task?.name}{task?.team?.name}</div></li>))}
     </ul>
 </div>
 </div>
