@@ -110,6 +110,7 @@ setSortData(e.target.value)
         <ul className="list-group my-3">
     {getSortedTasks()?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
     </ul>
+    {tasks?.tasks.length===0 && <h2 className="text-center my-2">No Tasks Found</h2>}
     </div>
     </div>}
     </div>

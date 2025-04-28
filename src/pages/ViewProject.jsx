@@ -93,6 +93,7 @@ const filteredTasks = tasks?.tasks?.filter(task => {
      
     {filteredTasks?.map(task=>(<li key={task?._id} className="list-group-item"><div>🎯 {task?.name}{task?.team?.name}</div></li>))}
     </ul>
+    {tasks?.tasks.length===0 && <h2 className="text-center my-2">No Tasks Found</h2>}
 </div>}
 </div>
 
