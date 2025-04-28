@@ -2,8 +2,8 @@ import Header from "../components/Header"
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
-import { useDispatch } from "react-redux"
-import { addTeams } from "../features/teamsSlice"
+import { useDispatch,useSelector } from "react-redux"
+import { addTeams, fetchTeams } from "../features/teamsSlice"
 const AddNewTeam=()=>{
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
    
@@ -13,6 +13,7 @@ const AddNewTeam=()=>{
         name:"",
         description:""
     })
+    const teams=useSelector(state=>state.teams)
     const navigate=useNavigate()
 const handleLogout=()=>{
   localStorage.removeItem("adminToken")
@@ -23,6 +24,8 @@ const curentToken=localStorage.getItem("adminToken")
 if(!curentToken){
     setIsAuthenticated(false)
     navigate("/")
+}else{
+    dispatch(fetchTeams({token:curentToken}))
 }
 },[isAuthenticated,navigate])
 const handleChange=event=>{
@@ -33,7 +36,7 @@ const handleChange=event=>{
 }
 const handleSubmit=(event)=>{
 event.preventDefault()
-console.log("Teams Data",teamsData)
+
 const currentToken = localStorage.getItem("adminToken")
 
 dispatch(addTeams({token:currentToken,postData:teamsData})).then(()=>{setMessage("Teams Added Sucessfully")
@@ -48,6 +51,8 @@ setTeamsData({
         description:""
 })
 }
+const isDuplicateName = teamsData.name.length > 0 && 
+teams?.teams?.some(team => team.name === teamsData.name)
     return(<>
     <Header/>
     <div className="row">
@@ -66,13 +71,19 @@ setTeamsData({
 <div className="content-container">
     <form className="my-4" onSubmit={handleSubmit}>
         <label htmlFor="name" className="fw-medium fs-5 mb-4">Team Name:</label>
-        <input id="name" onChange={handleChange} className="form-control" type="text" name="name" value={teamsData.name}/>
-        <br/><br/>
+        <input id="name" onChange={handleChange} className="form-control" type="text" name="name" value={teamsData.name} required/>
+        <br/>
+        {
+          isDuplicateName && <p className="text-danger">Caution: You must have a unique task name</p>
+        }<br/>
         <label htmlFor="description" className="fw-medium fs-5 mb-4">Team Description:</label>
-        <textarea id="description" onChange={handleChange} rows={"6"} value={teamsData.description} className="form-control"  name="description"></textarea>
+        <textarea id="description" onChange={handleChange} rows={"6"} value={teamsData.description} className="form-control"  name="description" required></textarea>
         <button className="btn btn-success my-4" type="submit">Add New Team</button>
     </form>
-    <h2 className="text-success">{messsage}</h2>
+    <h2 className="my-2">{messsage}</h2>
+    {
+        teams?.status=="error" && <h2 className="text-danger my-2">error: failed to post teams data</h2>
+    }
 </div>
 </div>
 

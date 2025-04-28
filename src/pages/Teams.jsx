@@ -40,13 +40,16 @@ const Teams=()=>{
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
 <div>
+
+{teams?.status=="error" && (<>
+<h2 className="text-danger my-2">error: failed to fetch teams data</h2></>)}
 {teams?.status==="loading" && (<>
     <div className="text-center mt-4">
   <div className="spinner-border" role="status">
     <span className="visually-hidden">Loading...</span>
   </div>
 </div></>)}
-    <div id='card-container'>
+{ teams.status!="loading" &&   <div id='card-container'>
 {teams?.teams?.map(team=>(<div  key={team?._id} className="card" >
   <div className="card-body">
     <h5 className="card-title"><Link to={`/viewteam/${team._id}`} state={{id:team._id,name:team.name,description:team.description}}>{team?.name} 👥</Link></h5>
@@ -55,7 +58,7 @@ const Teams=()=>{
   
   </div>
 </div>))}
-</div>
+</div>}
 </div>
 </div>
 </div>

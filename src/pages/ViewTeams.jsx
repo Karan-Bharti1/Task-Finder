@@ -6,7 +6,7 @@ import { fetchTasksForTeams } from "../features/taskSlice";
 const ViewTeams=()=>{
     const [sortData,setSortData]=useState("")
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
-    const token=localStorage.getItem("adminToken")
+   
     const dispatch=useDispatch()
     const navigate=useNavigate()
 const handleLogout=()=>{
@@ -54,7 +54,15 @@ const getSortedTasks = () => {
 
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
-<div>
+{tasks?.status=="loading" && (<>
+    <div className="text-center mt-4">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div></>)}
+{tasks?.status=="error" && (<>
+<h2 className="text-danger my-2">error: failed to fetch tasks data</h2></>)}
+{tasks?.status!="loading" &&<div>
     <div className="mt-3">
 <h4>{name}</h4>
 <p className="fs-4">{description}</p>    
@@ -69,10 +77,10 @@ const getSortedTasks = () => {
     <div className="me-3">
    
         <ul className="list-group mt-3">
-    {getSortedTasks()?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
+    {getSortedTasks()?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~  {task?.status}</p></div></li>))}
     </ul>
     </div>
-</div>
+</div>}
 </div>
 
     </div>

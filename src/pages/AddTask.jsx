@@ -33,6 +33,7 @@ const projectsData=useSelector(state=>state.projects)
 const tagsData=useSelector(state=>state.tags)
 const teamsData=useSelector(state=>state.teams)
 const ownersData=useSelector(state=>state.user)
+const tasks=useSelector(state=>state.tasks)
 useEffect(()=>{
 const curentToken=localStorage.getItem("adminToken")
 if(!curentToken){
@@ -43,9 +44,10 @@ if(!curentToken){
 dispatch(fetchTags({token:curentToken}))
 dispatch(fetchTeams({token:curentToken}))
 dispatch(fetchAllUsers({token:curentToken}))
+
 }
 },[isAuthenticated])
-console.log(ownersData)
+
 const handleChange=(event)=>{
     const {value,name}=event.target
     setTaskData(()=>({...taskData,[name]:name==="timeToComplete"?parseFloat(value):value}))
@@ -95,7 +97,8 @@ const handleMultiDropDown=(selectedOptions)=>{
 </div>
 <div>
    <TaskForm handleSubmit={handleSubmit} taskData={taskData} handleChange={handleChange} projectsData={projectsData} teamsData={teamsData} options={options} handleMultiDropDown={handleMultiDropDown} handleMultiDropDownOwners={handleMultiDropDownOwners} ownersOptions={ownersOptions}/>
-    <h2>{message}</h2>
+    <h2 className="my-2">{message}</h2>
+{tasks.status=="error" && <h2 className="text-danger my-2">error: failed to add new task data</h2>}
 </div>
 </div>
 

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom"
 
 const SignUp=()=>{
     const state=useSelector(state=>state.user)
+
     const dispatch=useDispatch()
     const [user,setUser]=useState({
         name:"",
@@ -34,7 +35,7 @@ const SignUp=()=>{
        dispatch(signUpUser(user)).then(()=>setIsForm(true))
     
     }
- console.log(matchedEmail)
+
     
     return(<>
     <Header/>
@@ -53,6 +54,7 @@ const SignUp=()=>{
         <Link to={"/"}>Back to Login</Link></>)}
         {isForm && (<><h2 className="text-success">You had a successful sign up</h2>
         <Link to="/" className="btn btn-success my-3">Login</Link></>)}
+        {state.status === "error" && <p className="text-danger py-3">Error: Unable to login user</p>}
         {user.password.length>0 && recheckPassword.length>0 && user.password!==recheckPassword && <p className="text-danger py-3">Caution: Both passwords must match</p>}
         </div>
     </main>

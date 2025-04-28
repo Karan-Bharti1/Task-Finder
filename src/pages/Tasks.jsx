@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { Link } from "react-router-dom"
 import { fetchTasks } from "../features/taskSlice"
-import { current } from "@reduxjs/toolkit"
+
 import { fetchProjects } from "../features/projectSlice"
 import { fetchAllUsers } from "../features/userslice"
 import { fetchTeams } from "../features/teamsSlice"
@@ -46,7 +46,7 @@ const Tasks=()=>{
     const teams=useSelector(state=>state.teams)
     useEffect(()=>{
     const curentToken=localStorage.getItem("adminToken")
- console.log(curentToken)
+
     if(!curentToken){
         setIsAuthenticated(false)
         navigate("/")
@@ -72,7 +72,7 @@ setSortData(e.target.value)
       
       return tasks.tasks;
     };
-    console.log(tasks)
+
         return(<>
         <Header/>
         <div className="row">
@@ -94,6 +94,8 @@ setSortData(e.target.value)
     <span className="visually-hidden">Loading...</span>
   </div>
 </div></>)}
+{tasks?.status=="error" && (<>
+<h2 className="text-danger my-2">error: failed to fetch tasks data</h2></>)}
  {tasks.status!="loading" &&   <div>
   <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/>
    <label>Sort By:</label>
@@ -105,7 +107,7 @@ setSortData(e.target.value)
    </select>
     <div className="me-3">
    
-        <ul className="list-group mt-3">
+        <ul className="list-group my-3">
     {getSortedTasks()?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
     </ul>
     </div>

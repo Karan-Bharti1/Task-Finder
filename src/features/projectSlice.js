@@ -23,7 +23,7 @@ const response=await axios.get(`${baseUrl}projects/auth`,{ headers: {
 return response.data
 })
 export const addProject=createAsyncThunk("addProjects/projects",async({token,postData})=>{
-   console.log(token)
+
 
       try{
         console.log(postData)
@@ -34,7 +34,7 @@ export const addProject=createAsyncThunk("addProjects/projects",async({token,pos
               }
           })
         
-        console.log(response.data)
+      
         return response.data
       }catch(error){
         console.log(error)
@@ -69,7 +69,7 @@ export const projectSlice=createSlice({
             state.status="succeeded"
          
             state.projects.push(action.payload)
-            console.log(action.payload,"Karan")
+           
         })
         builder.addCase(addProject.rejected,(state,action)=>{
             state.status="error"

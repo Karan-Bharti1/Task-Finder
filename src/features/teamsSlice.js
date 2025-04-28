@@ -3,7 +3,7 @@ import { getHeaders } from "./projectSlice";
 import axios from "axios";
 import { baseUrl } from "../url";
 export const fetchTeams=createAsyncThunk("fetchTeams/teams",async({token})=>{
-    console.log(token)
+   
 const headers={
     'Content-Type':'application/json',
  'Authorization':`Bearer ${token}`

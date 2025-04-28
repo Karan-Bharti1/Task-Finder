@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchProjects } from './features/projectSlice'
 import { fetchTasks } from './features/taskSlice'
 function App() {
+ 
 const [user,setUser]=useState({
   email:"",password:""
 })
@@ -24,6 +25,8 @@ const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("a
 const dispatch=useDispatch()
 const [proj,setProj]=useState()
 const projects=useSelector(state=>state.projects)
+const state=useSelector(state=>state.user)
+console.log(state)
 const handlechange=(event)=>{
 const {name,value}=event.target
 setUser(prev=>({
@@ -44,7 +47,7 @@ localStorage.setItem("adminToken",data.token)
 setIsAuthenticated(true)
 }
 const token=localStorage.getItem("adminToken")
-console.log(token)
+
 const handleLogout=()=>{
   localStorage.removeItem("adminToken")
   setIsAuthenticated(false)
@@ -55,6 +58,8 @@ useEffect(() => {
   if (currentToken) {
     dispatch(fetchProjects({token: currentToken}))  
     dispatch(fetchTasks({token:currentToken,key:"status",value:filters.status,key1:"tag",value1:filters.tag,key2:"owner",value2:filters.owner,key3:"project",value3:filters.project,key4:"team",value4:filters.team}))
+  }else{
+    setIsAuthenticated(false)
   }
 }, [dispatch, isAuthenticated])
 
@@ -74,11 +79,12 @@ useEffect(() => {
   <button className="btn btn-success" type='submit'>Login</button>
   </form>
   <p className='my-3'>~ In case you don't have a account <Link to={"/signup"}>Sign up</Link></p>
+  {state.status == "error" && <p className="text-danger py-3">Error: Unable to login</p>}
 </div>}
 </div>
 {
   token && <>
-  
+ 
   <div className='row'>
 <div className='col-md-2 bg-white-50' id='sidebar-block'>
 
@@ -96,13 +102,17 @@ useEffect(() => {
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
 <div>
-  <h3>Projects</h3>
-  {projects.status==="loading" && (<>
+{(projects.status==="loading" || tasks.status==="loading") && (<>
     <div className="text-center">
   <div className="spinner-border" role="status">
     <span className="visually-hidden">Loading...</span>
   </div>
 </div></>)}
+{(projects.status=="error" || tasks.status=="error") && (<>
+   <div>
+    <h2 className='my-3 text-danger'>error: failed To fetch projects and tasks data</h2></div></>)}
+{ (projects.status!="loading" || tasks.status!="loading"  )&& <><h3>Projects</h3>
+
   <div id='card-container'>
 {projects?.projects?.map(project=>(<div key={project?._id} className="card" >
   <div  className="card-body">
@@ -114,12 +124,14 @@ useEffect(() => {
 </div>))}
 
 </div>
-</div>
 <br/>
 <h3>Tasks</h3>
 <ul className="list-group my-3 me-3">
 {tasks?.tasks?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
 </ul>
+</>
+}
+</div>
 
 </div>
 

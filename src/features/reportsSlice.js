@@ -24,7 +24,7 @@ builder.addCase(fetchTotalTasksClosedInLastWeek.pending,(state)=>{
             state.status="succeeded"
            
             state.tasks=action.payload
-            console.log(action.payload)
+            
         })
   builder.addCase(fetchTotalTasksClosedInLastWeek.rejected,(state,action)=>{
             state.status="error"

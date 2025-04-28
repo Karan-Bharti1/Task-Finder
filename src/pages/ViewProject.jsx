@@ -11,7 +11,6 @@ import { fetchTeams } from "../features/teamsSlice";
 fetchTeams
 const ViewProject=()=>{
     const {projectId}=useParams()
-    console.log(projectId)
     const dispatch=useDispatch()
     const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
     const token=localStorage.getItem("adminToken")
@@ -42,9 +41,7 @@ if(!curentToken){
          
 }
 },[isAuthenticated,navigate,projectId,dispatch])
-console.log(tasks)
-console.log(ownerFilter)
-console.log(tagFilter)
+
 const filteredTasks = tasks?.tasks?.filter(task => {
     const matchOwner = ownerFilter ? task.owners?.some(owner => owner === ownerFilter) : true;
     const matchTag = tagFilter ? task.tags?.some(tag => tag=== tagFilter) : true;
@@ -67,7 +64,15 @@ const filteredTasks = tasks?.tasks?.filter(task => {
 
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
-<div className="me-4">
+{tasks?.status=="loading" && (<>
+    <div className="text-center mt-4">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div></>)}
+{tasks?.status=="error" && (<>
+<h2 className="text-danger my-2">error: failed to fetch tasks data</h2></>)}
+{tasks.status!="loading" &&<div className="me-4">
     <h2 className="text-success">{name}</h2>
     <p className="fs-4">{description}</p>
     <h3>Tasks Assigned</h3>
@@ -88,7 +93,7 @@ const filteredTasks = tasks?.tasks?.filter(task => {
      
     {filteredTasks?.map(task=>(<li key={task?._id} className="list-group-item"><div>🎯 {task?.name}{task?.team?.name}</div></li>))}
     </ul>
-</div>
+</div>}
 </div>
 
     </div>

@@ -90,7 +90,7 @@ const pieChartData={
             return(<>
             <Pie options={options} data={data}/></>)
         }
-      console.log(pendingTasksData)
+  
         console.log(taskData)
         const barChartData = {
             labels: pendingTasks?.map(task => task.name) || [],
@@ -128,7 +128,7 @@ const pieChartData={
           
             return acc;
           }, []);
-          console.log(taskData)
+       
           const teamTaskSummary = closedTasks.reduce((acc, task) => {
             const teamName = task.team.name;
           
@@ -142,7 +142,6 @@ const pieChartData={
             return acc;
           }, []);
           
-          console.log(projectTaskSummary);
           const barChartData3={
             labels: projectTaskSummary?.map(p => p.projectName) || [],
             datasets: [{
@@ -207,7 +206,15 @@ const pieChartData={
 
 <button className='btn btn-success' onClick={handleLogout}>Log Out</button>
 </div>
-<div>
+{(tasks.status ==="loading"||tasksClosedInLastWeek.status==="loading"  ) &&(<>
+    <div className="text-center mt-4">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div></>)}
+{(tasks?.status=="error"|| tasksClosedInLastWeek.status=="error") && (<>
+  <h2 className="text-danger my-2">error: failed to fetch reports data</h2></>)}
+{(tasks.status !=="loading"|| tasksClosedInLastWeek.status!="loading"  )&&<div>
     <div className="chartDataContainer">
         <div className="dataContainer">
             <h2>Total Tasks</h2>
@@ -241,10 +248,7 @@ const pieChartData={
                             </div>
                         </div>
                         <div className="chartDataContainer">
-                            {/* <div >
-                                <h2>Project Wise Detailsk</h2>
-                                <h4>Number of Closed Tasks: {tasksClosedReportsLastWeek?.length || 0}</h4>
-                            </div> */}
+                           
                             <div className="chartContainer2">
                                 <h2>Project Wise Details</h2>
                                 <BarChart data={barChartData3}/>
@@ -254,7 +258,7 @@ const pieChartData={
                                 <BarChart data={barChartData4}/>
                             </div>
                         </div>
-</div>
+</div>}
 </div>
 
     </div>

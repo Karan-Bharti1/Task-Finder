@@ -6,19 +6,18 @@ export const fetchTasksForProject=createAsyncThunk("fetchtaskProject/tasks",asyn
     const response=await axios.get(`${baseUrl}tasks/projects/auth/${id}`,{
         headers:getHeaders(token)
     })
-    console.log(response.data)
+  
     return response.data
 })
 export const fetchTasksForTeams=createAsyncThunk("fetchtaskTeams/tasks",async({token,id})=>{
     const response=await axios.get(`${baseUrl}tasks/teams/auth/${id}`,{
         headers:getHeaders(token)
     })
-    console.log(response.data)
+  
     return response.data
 })
 export const fetchTasks=createAsyncThunk("fetchTasks/tasks",async({token,key,value,key1,value1,key2,value2,key3,value3,key4,value4})=>{
-    console.log(token)
-    console.log(getHeaders(token))
+
     const response=await axios.get(`${baseUrl}tasks/auth?${key}=${value}&${key1}=${value1}&${key2}=${value2}&${key3}=${value3}&${key4}=${value4}`,{
         headers:getHeaders(token)
     })
@@ -94,11 +93,11 @@ builder.addCase(addTasks.pending,state=>{
         builder.addCase(editTasks.fulfilled,(state,action)=>{
             state.status="succeeded"
             const index=state.tasks.findIndex(task=>task._id===action.payload._id)
-            console.log("Before Update:", state.tasks[index]);
+          
             if(index!=-1){
         state.tasks[index]=action.payload
             }   
-            console.log("After Update:", state.tasks[index]);
+           
         })
         builder.addCase(editTasks.rejected,(state,action)=>{
             state.status="error"

@@ -7,7 +7,7 @@ import { getHeaders } from "./projectSlice";
   const response=await axios.get(`${baseUrl}tags/auth`,{
     headers:getHeaders(token)
   })  
-  console.log(response)
+
   return response.data
 })
 export const tagSlice=createSlice({
