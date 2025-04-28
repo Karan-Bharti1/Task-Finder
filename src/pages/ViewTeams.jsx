@@ -61,7 +61,7 @@ const getSortedTasks = () => {
   </div>
 </div></>)}
 {tasks?.status=="error" && (<>
-<h2 className="text-danger my-2">error: failed to fetch tasks data</h2></>)}
+<h2 className="text-danger my-2">Error: failed to fetch tasks data</h2></>)}
 {tasks?.status!="loading" &&<div>
     <div className="mt-3">
 <h4>{name}</h4>

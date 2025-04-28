@@ -79,7 +79,7 @@ projects?.projects?.some(project => project.name === projectData.name)
     </form>
     <h2 className="my-2">{messsage}</h2>
     {
-        projects?.status=="error" && <h2 className="text-danger my-2">error: failed to post project data</h2>
+        projects?.status=="error" && <h2 className="text-danger my-2">Error: failed to post project data</h2>
     }
 </div>
 </div>

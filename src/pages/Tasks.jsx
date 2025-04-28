@@ -95,7 +95,7 @@ setSortData(e.target.value)
   </div>
 </div></>)}
 {tasks?.status=="error" && (<>
-<h2 className="text-danger my-2">error: failed to fetch tasks data</h2></>)}
+<h2 className="text-danger my-2">Error: failed to fetch tasks data</h2></>)}
  {tasks.status!="loading" &&   <div>
   <Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projectsData} tagsData={tagsData} ownersData={ownersData}/>
    <label>Sort By:</label>

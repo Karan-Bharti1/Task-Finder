@@ -71,7 +71,7 @@ const filteredTasks = tasks?.tasks?.filter(task => {
   </div>
 </div></>)}
 {tasks?.status=="error" && (<>
-<h2 className="text-danger my-2">error: failed to fetch tasks data</h2></>)}
+<h2 className="text-danger my-2">Error: failed to fetch tasks data</h2></>)}
 {tasks.status!="loading" &&<div className="me-4">
     <h2 className="text-success">{name}</h2>
     <p className="fs-4">{description}</p>

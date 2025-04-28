@@ -82,7 +82,7 @@ teams?.teams?.some(team => team.name === teamsData.name)
     </form>
     <h2 className="my-2">{messsage}</h2>
     {
-        teams?.status=="error" && <h2 className="text-danger my-2">error: failed to post teams data</h2>
+        teams?.status=="error" && <h2 className="text-danger my-2">Error: failed to post teams data</h2>
     }
 </div>
 </div>

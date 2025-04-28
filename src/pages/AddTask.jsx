@@ -98,7 +98,7 @@ const handleMultiDropDown=(selectedOptions)=>{
 <div>
    <TaskForm handleSubmit={handleSubmit} taskData={taskData} handleChange={handleChange} projectsData={projectsData} teamsData={teamsData} options={options} handleMultiDropDown={handleMultiDropDown} handleMultiDropDownOwners={handleMultiDropDownOwners} ownersOptions={ownersOptions}/>
     <h2 className="my-2">{message}</h2>
-{tasks.status=="error" && <h2 className="text-danger my-2">error: failed to add new task data</h2>}
+{tasks.status=="error" && <h2 className="text-danger my-2">Error: failed to add new task data</h2>}
 </div>
 </div>
 

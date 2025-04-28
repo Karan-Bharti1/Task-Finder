@@ -213,7 +213,7 @@ const pieChartData={
   </div>
 </div></>)}
 {(tasks?.status=="error"|| tasksClosedInLastWeek.status=="error") && (<>
-  <h2 className="text-danger my-2">error: failed to fetch reports data</h2></>)}
+  <h2 className="text-danger my-2">Error: failed to fetch reports data</h2></>)}
 {(tasks.status !=="loading"|| tasksClosedInLastWeek.status!="loading"  )&&<div>
     <div className="chartDataContainer">
         <div className="dataContainer">

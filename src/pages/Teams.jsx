@@ -42,7 +42,7 @@ const Teams=()=>{
 <div>
 
 {teams?.status=="error" && (<>
-<h2 className="text-danger my-2">error: failed to fetch teams data</h2></>)}
+<h2 className="text-danger my-2">Error: failed to fetch teams data</h2></>)}
 {teams?.status==="loading" && (<>
     <div className="text-center mt-4">
   <div className="spinner-border" role="status">

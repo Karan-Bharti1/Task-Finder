@@ -23,10 +23,10 @@ const [filters,setFilters]=useState({
 
 const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("adminToken"))
 const dispatch=useDispatch()
-const [proj,setProj]=useState()
+
 const projects=useSelector(state=>state.projects)
 const state=useSelector(state=>state.user)
-console.log(state)
+
 const handlechange=(event)=>{
 const {name,value}=event.target
 setUser(prev=>({

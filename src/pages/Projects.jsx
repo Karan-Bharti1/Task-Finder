@@ -54,7 +54,7 @@ const Projects=()=>{
 </div></>)}
 
 {projects?.status=="error" && (<>
-  <h2 className="text-danger my-2">error: failed to fetch projects data</h2></>)}
+  <h2 className="text-danger my-2">Error: failed to fetch projects data</h2></>)}
     <div id='card-container'>
    
 {projects?.projects?.map(project=>(<div  key={project?._id} className="card" >
