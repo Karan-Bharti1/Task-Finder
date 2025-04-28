@@ -7,6 +7,10 @@ import { baseUrl } from './url'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProjects } from './features/projectSlice'
 import { fetchTasks } from './features/taskSlice'
+import { fetchAllUsers } from './features/userslice'
+import { fetchTeams } from './features/teamsSlice'
+import { fetchTags } from './features/tagsSlice'
+import Filters from './components/Filters'
 function App() {
  
 const [user,setUser]=useState({
@@ -58,12 +62,27 @@ useEffect(() => {
   if (currentToken) {
     dispatch(fetchProjects({token: currentToken}))  
     dispatch(fetchTasks({token:currentToken,key:"status",value:filters.status,key1:"tag",value1:filters.tag,key2:"owner",value2:filters.owner,key3:"project",value3:filters.project,key4:"team",value4:filters.team}))
+
+        dispatch(fetchAllUsers({token:currentToken}))
+        dispatch(fetchTeams({token:currentToken}))
+        dispatch(fetchTags({token:currentToken}))
   }else{
     setIsAuthenticated(false)
   }
 }, [dispatch, isAuthenticated])
 
-    
+const handleFilterChange=e=>{
+  const {name,value}=e.target
+  const token=localStorage.getItem("adminToken")
+  const updatedFilters={...filters,[name]:value}
+  setFilters(updatedFilters)
+  dispatch(fetchTasks({token:token,key:"status",value:updatedFilters.status,key1:"tag",value1:updatedFilters.tag,key2:"owner",value2:updatedFilters.owner,key3:"project",value3:updatedFilters.project,key4:"team",value4:updatedFilters.team}))
+}
+
+
+const ownersData=useSelector(state=>state.user)
+const tagsData=useSelector(state=>state.tags)
+const teams=useSelector(state=>state.teams)
     const tasks=useSelector(state=>state.tasks)
 
   return (
@@ -126,9 +145,11 @@ useEffect(() => {
 </div>
 <br/>
 <h3>Tasks</h3>
+<Filters handleFilterChange={handleFilterChange} filters={filters} teams={teams} projectsData={projects} tagsData={tagsData} ownersData={ownersData}/>
 <ul className="list-group my-3 me-3">
 {tasks?.tasks?.map(task=>(<li key={task._id} className="list-group-item"><div className="task-flex"><p >🎯<Link state={{id:task._id,status:task.status,name:task.name,project:task.project,team:task.team,owners:task.owners,tags:task.tags,timeToComplete:task.timeToComplete,updatedAt:task.updatedAt}} to={`/viewtask/${task._id}`}>{task.name}</Link></p><p >~{task?.team?.name}</p></div></li>))}
 </ul>
+{tasks?.status !="loading"&&tasks?.tasks.length===0 && <h2 className="text-center my-2">No Tasks Found</h2>}
 </>
 }
 </div>
