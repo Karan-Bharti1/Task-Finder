@@ -21,9 +21,11 @@ I am currently learning Full Stack Web Development with a focus on the MERN stac
 
 **Database:** MongoDB with models for leads, sales agents, comments, and tags.
 
-##Login
+## Login Details 
 Test User: karan@example.com
+
 Test Password : 123
+
 ## Key Features
 
 ### Login
